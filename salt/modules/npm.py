@@ -281,8 +281,6 @@ def list_(pkg=None, dir=None, runas=None, env=None, depth=None):
     depth
         Limit the depth of the packages listed
 
-        .. versionadded:: tbd
-
     CLI Example:
 
     .. code-block:: bash
