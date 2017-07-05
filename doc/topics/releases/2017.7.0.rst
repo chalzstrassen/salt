@@ -1,8 +1,38 @@
-:orphan:
+.. _release-2017-7-0:
 
-======================================
-Salt Release Notes - Codename Nitrogen
-======================================
+===============================================
+Salt 2017.7.0 Release Notes - Codename Nitrogen
+===============================================
+
+
+========
+Python 3
+========
+
+The 2017.7 Salt Release adds initial Python 3 support.
+
+The default Python version of Salt will remain Python 2, although Python 3 packages will be supplied for users who want to help test this new feature.
+
+======================
+Python 2.6 Deprecation
+======================
+
+Salt will no longer support Python 2.6. We will provide python2.7 packages on our repo_ for RedHat and CentOS 6 to ensure users can still run Salt on these platforms.
+
+.. _repo: https://repo.saltstack.com/
+
+============
+Known Issues
+============
+The following salt-cloud drivers have known issues running with Python 3. These drivers will not work with Python 3, and Python 2.7 should be used instead:
+
+- Joyent
+
+- Any driver that relies on the `apache-libcloud` library such as cloudstack, dimenstiondata, gce, nova, and openstack
+
+- When running under Python 3, users who require Unicode support should ensure that a locale is set on their machines.
+  Users using the `C` locale are advised to switch to a UTF-aware locale to ensure proper functionality with Salt with Python 3.
+
 
 States Added for Management of systemd Unit Masking
 ===================================================
@@ -161,6 +191,7 @@ Wildcard Versions in :py:func:`pkg.installed <salt.states.pkg.installed>` States
 - The :py:func:`pkg.installed <salt.states.pkg.installed>` state now supports
   wildcards in package versions, for the following platforms:
 
+  - SUSE/openSUSE Leap/Thumbleweed
   - Debian/Ubuntu
   - RHEL/CentOS
   - Arch Linux
@@ -272,7 +303,7 @@ Jinja
 Filters
 -------
 
-New filters in Nitrogen:
+New filters in 2017.7.0:
 
 - :jinja_ref:`to_bool`
 - :jinja_ref:`exactly_n_true`
@@ -365,7 +396,7 @@ have been improved, enhanced and widenened in scope:
 - Proxy keepalive: due to external factors, the connection with the remote
   device can be dropped, e.g.: packet loss, idle time (no commands issued
   within a couple of minutes or seconds), or simply the device decides to kill
-  the process. In Nitrogen we have introduced the functionality to re-establish
+  the process. In 2017.7.0 we have introduced the functionality to re-establish
   the connection. One can disable this feature through the
   :conf_proxy:`proxy_keep_alive` option and adjust the polling frequency
   speciying a custom value for :conf_proxy:`proxy_keep_alive_interval`,
@@ -520,7 +551,7 @@ documentation for :ref:`skip_translate
 .. note::
     When running the :py:func:`docker_container.running
     <salt.states.docker_container.running>` state for the first time after
-    upgrading to Nitrogen, your container(s) may be replaced. The changes may
+    upgrading to 2017.7.0, your container(s) may be replaced. The changes may
     show diffs for certain parameters which say that the old value was an empty
     string, and the new value is ``None``. This is due to the fact that in
     prior releases Salt was passing empty strings for these values when
@@ -579,6 +610,11 @@ Beacons
 
 - :mod:`salt.beacons.log <salt.beacons.log>`
 
+Cache
+-----
+
+- :mod:`salt.cache.redis_cache <salt.cache.redis_cache>`
+
 Engines
 -------
 
@@ -600,7 +636,6 @@ Execution modules
 - :mod:`salt.modules.heat <salt.modules.heat>`
 - :mod:`salt.modules.icinga2 <salt.modules.icinga2>`
 - :mod:`salt.modules.logmod <salt.modules.logmod>`
-- :mod:`salt.modules.mattermost <salt.modules.mattermost>`
 - :mod:`salt.modules.mattermost <salt.modules.mattermost>`
 - :mod:`salt.modules.namecheap_dns <salt.modules.namecheap_dns>`
 - :mod:`salt.modules.namecheap_domains <salt.modules.namecheap_domains>`
@@ -748,7 +783,7 @@ The ``htpasswd`` execution module had the following function removed:
 - ``useradd_all``: Please use ``useradd`` instead.
 
 The ``img`` execution module has been removed. All of its associated functions
-were marked for removal in the Nitrogen release. The functions removed in this
+were marked for removal in the 2017.7.0 release. The functions removed in this
 module are mapped as follows:
 
 - ``mount_image``/``mnt_image``: Please use ``mount.mount`` instead.

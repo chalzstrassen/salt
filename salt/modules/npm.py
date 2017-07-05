@@ -188,7 +188,7 @@ def _extract_json(npm_output):
     # macOS with fsevents includes the following line in the return
     # when a new module is installed which is invalid JSON:
     #     [fsevents] Success: "..."
-    while lines and lines[0].startswith('[fsevents]'):
+    while lines and (lines[0].startswith('[fsevents]') or lines[0].startswith('Pass ')):
         lines = lines[1:]
     try:
         return json.loads(''.join(lines))
@@ -281,6 +281,8 @@ def list_(pkg=None, dir=None, runas=None, env=None, depth=None):
     depth
         Limit the depth of the packages listed
 
+        .. versionadded:: 2016.11.6, 2017.7.0
+
     CLI Example:
 
     .. code-block:: bash
@@ -302,9 +304,8 @@ def list_(pkg=None, dir=None, runas=None, env=None, depth=None):
 
     if depth is not None:
         if not isinstance(depth, (int, float)):
-            raise salt.exceptions.SaltInvocationError('Error: depth {} must be a number'.format(depth))
-        cmd.append('--depth={}'.format(int(depth)))
-
+            raise salt.exceptions.SaltInvocationError('Error: depth {0} must be a number'.format(depth))
+        cmd.append('--depth={0}'.format(int(depth)))
     if pkg:
         # Protect against injection
         pkg = _cmd_quote(pkg)
